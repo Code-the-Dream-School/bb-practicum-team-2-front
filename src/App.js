@@ -6,6 +6,7 @@ import LandingPage from "./components/LandingPage";
 import ProfilePage from "./components/ProfilePage";
 import GameLobby from "./components/GameLobby";
 import GameRoom from "./components/GameRoom";
+import UserName from "./components/UserName";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 const socket = io.connect("http://localhost:3001");
@@ -25,10 +26,20 @@ function App() {
   const [guessingYourWord, setGuessingYourWord] = useState(false);
   const [youGuessed, setYouGuessed] = useState(false);
 
+  function userNameHandler(event){
+    const {value} = event.target
+    setUserName(value)
+  }
+
+  function wordHandler(event){
+    const {value} = event.target
+    setWord(value)
+  }
+
   // Will not be used for the Login.js/ replaced by Login.js code.
-  // const connect = () => {
-  //   setConnected(true)
-  // }
+  const connect = () => {
+    setConnected(true)
+  }
 
   // Will be moved to GameLobby.js
   const createRoom = () => {
@@ -44,17 +55,19 @@ function App() {
     socket.on("available_rooms", (data) => {
       if (data === false) setAvailableRooms([]);
       else setAvailableRooms(data);
-      console.log(data);
     });
 
     // Move to GameLobby.js, inside a useEffect with Socket as dependency
-    socket.on("players", (data) => setPlayers(data));
+    socket.on("players", (data) => {
+      setPlayers(data)}
+      );
 
     // Move to GameRoom.js, inside a useEffect with Socket as dependency *** May need to be in it's own component down the line. A pre-gameRoom screen.
     socket.on("all_players_ready", () => setAllPlayersReady(true));
 
     // Move to GameRoom.js, inside a useEffect with Socket as dependency
     socket.on("word_to_guess", (length) => {
+      console.log(length,'word to guess length');
       setGameStarted(true);
       setLength(length);
     });
@@ -118,8 +131,32 @@ function App() {
           <Route path="/" exact element={<LandingPage />} />
           <Route path="Login" exact element={<Login />} />
           <Route path="ProfilePage" exact element={<ProfilePage />} />
-          <Route path="GameLobby" exact element={<GameLobby />} />
-          <Route path="GameRoom" exact element={<GameRoom />} />
+          <Route path="UserName" exact element={<UserName 
+            userNameHandler={event=>userNameHandler(event)} 
+            connectH={connect} 
+          />} />
+          <Route path="GameLobby" exact element={<GameLobby 
+            userName={userName}
+            socket={socket} 
+            availableRooms={availableRooms} 
+            roomHandler={event=>setRoom(event.target.value)} 
+            joinRoom={joinRoom}
+          />} />
+          <Route path="GameRoom" exact element={<GameRoom 
+            room={room} 
+            players={players} 
+            leaveRoom={leaveRoom} 
+            wordHandler={event=> wordHandler(event)}
+            sendWord={sendWord}
+            startGame={startGame}
+            dis={!allPlayersReady}
+            gameStarted={gameStarted}
+            length={length}
+            guess={guess}
+            guessWord={guessWord}
+            guessWordHandler={event => setWord(event.target.value)}
+            guessingYourWord={guessingYourWord}
+          />} />
         </Routes>
       </Router>
     </div>

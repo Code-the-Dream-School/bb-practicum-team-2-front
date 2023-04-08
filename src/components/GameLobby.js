@@ -1,173 +1,34 @@
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import io from "socket.io-client";
 
-function GameLobby() {
+
+function GameLobby(props) {
+
   // Navigation
   let navigate = useNavigate();
+
   const createRoom = () => {
-    navigate("/GameRoom"); // Navigate to GameRoom
-  };
-  const joinRoom = () => {
-    navigate("/GameRoom"); // Navigate to GameRoom
+    props.socket.emit("create_room", props.userName);
+    navigate('/GameRoom')
   };
 
-  // NOTE: HAVE TO MANUALLY UPDATE DEFAULT VALUE IN STATE TO TEST (eventually will need to determine how to feed number of games into setExistingGames)
-  // Conditionally rendering page for 0 Current Games vs. 1 or more Current Games
-  const [existingGames, setExistingGames] = useState(2);
-
-  // This isn't working to change the game count on loading
-  const changeGameCount = () => {
-    setExistingGames = 0;
-  };
+  function joinRoom(){
+    props.joinRoom()
+    navigate('/GameRoom')
+  }
 
   return (
-    <>
-      {existingGames === 0 ? (
-        <div onload={changeGameCount}>
-          <title>Game Lobby</title>
-          <h1>GameLobby</h1>
-          <hr></hr>
-          <div>
-            {/* //////////////////////////////////// */}
-            {/* Create a room section */}
-            {/* //////////////////////////////////// */}
-            <h2>Create the first room!</h2>
-            <div>
-              <p>Number of Rounds</p>
-              <select>
-                <option>Select number of rounds</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-              </select>
-            </div>
-
-            <div>
-              <p>Number of Players</p>
-              <select>
-                <option>Select a max number of players</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-                <option>9</option>
-                <option>10</option>
-              </select>
-            </div>
-
-            <div>
-              <p>Image for your room</p>
-              <select>
-                <option>Select an image for your room</option>
-                <option>:)</option>
-                <option>:(</option>
-                <option>:/</option>
-                <option>:o</option>
-              </select>
-            </div>
-
-            <br></br>
-
-            <button onClick={createRoom}>Create</button>
-
-            {/* //////////////////////////////////// */}
-            {/* Need a hint section */}
-            {/* //////////////////////////////////// */}
-            <h2>Need a hint?</h2>
-            <p>
-              Hint numero uno:{" "}
-              <em>
-                This is where you can see all of the available games you can
-                join, once they are created. Create the first room above ^^ to
-                play!”
-              </em>
-            </p>
-          </div>
-        </div>
-      ) : (
-        <div onload={changeGameCount}>
-          <title>Game Lobby</title>
-          <h1>GameLobby</h1>
-          <hr></hr>
-          <div>
-            {/* //////////////////////////////////// */}
-            {/* Create a room section */}
-            {/* //////////////////////////////////// */}
-            <h2>Create the first room!</h2>
-            <div>
-              <p>Number of Rounds</p>
-              <select>
-                <option>Select number of rounds</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-              </select>
-            </div>
-
-            <div>
-              <p>Number of Players</p>
-              <select>
-                <option>Select a max number of players</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-                <option>9</option>
-                <option>10</option>
-              </select>
-            </div>
-
-            <div>
-              <p>Image for your room</p>
-              <select>
-                <option>Select an image for your room</option>
-                <option>:)</option>
-                <option>:(</option>
-                <option>:/</option>
-                <option>:o</option>
-              </select>
-            </div>
-
-            <br></br>
-
-            <button onClick={createRoom}>Create</button>
-          </div>
-
-          {/* //////////////////////////////////// */}
-          {/* Join a room section */}
-          {/* //////////////////////////////////// */}
-
-          <hr></hr>
-
-          <div>
-            <h2>Join a Room!</h2>
-            <div>
-              <select>
-                Current games dropdown
-                <option>Select a game to join</option>
-                <option>14 hyper players</option>
-                <option>8 rambunctious players</option>
-                <option>5 measly players (running)</option>
-                <option>1 sad player</option>
-              </select>
-            </div>
-
-            <br></br>
-
-            <button onClick={joinRoom}>Join</button>
-          </div>
-        </div>
-      )}
-    </>
+    <div className="App">
+      <h1>Available Rooms: {props.availableRooms.length > 0 ? props.availableRooms.join('-') : 'No Rooms Available, create a New Room'}</h1>
+        <input placeholder='Room Number...' onChange={props.roomHandler} />
+        <button onClick={joinRoom}>Join Room</button>
+        <br />
+        <br />
+        <button onClick={createRoom}>Create New Room</button>
+        <button onClick={props.disconnectRoom} >Disconnect</button>
+    </div>
   );
 }
 

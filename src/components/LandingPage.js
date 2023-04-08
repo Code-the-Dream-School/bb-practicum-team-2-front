@@ -8,7 +8,7 @@ function LandingPage() {
   // Will assign the user a random username and send the user to the GameLobby
     // Random username - WIP
   const playNow = () => {
-    navigate('/GameLobby'); //navigate to GameLobby
+    navigate('/UserName'); //navigate to GameLobby
     console.log("PlayNow - inside GAMELOBBY");
   }
 

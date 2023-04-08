@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import ScoreBoard from './ScoreBoard';
+import GameBoard from './GameBoard';
 
-function GameBoard() {
+{/* <div className="App">
+  <h2>Waiting for the other players....</h2>
+  <button onClick={startGame} disabled={dis}>Start Game</button>
+  <button onClick={leaveRoom}>Leave Room</button>
+  <button onClick={disconnectRoom} >Disconnect</button>
+</div> */}
+
+function GameRoom(props) {
   let navigate = useNavigate(); 
 
   const hamburgerNav = (event) => {
@@ -26,7 +34,8 @@ function GameBoard() {
       </div>
       
       <div>
-        <h1>Room Name Placeholder</h1>
+        <h1>Room {props.room}</h1>
+        <h2>Players:{props.players.join('-')}</h2>
       </div>
 
       <div style={columnStyle}>
@@ -34,10 +43,19 @@ function GameBoard() {
       </div>
 
       <div style={columnStyle}>GameBoard placeholder
-        <div>
-          <h4>Guess input field/ form placeholder</h4>
-          <textarea placeholder='Enter guess here'></textarea>
-        </div>
+        <GameBoard 
+          leaveRoom={props.leaveRoom} 
+          wordHandler={props.wordHandler} 
+          sendWord={props.sendWord}
+          startGame={props.startGame}
+          dis={props.dis}
+          gameStarted={props.gameStarted}
+          length={props.length}
+          guess={props.guess}
+          guessWord={props.guessWord}
+          guessWordHandler={props.guessWordHandler}
+          guessingYourWord={props.guessingYourWord}
+        />
       </div>
 
       <div style={columnStyle} >
@@ -47,4 +65,5 @@ function GameBoard() {
   )
 }
 
-export default GameBoard
+export default GameRoom
+
