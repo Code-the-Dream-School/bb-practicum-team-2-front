@@ -26,6 +26,7 @@ function App() {
   const [guessingYourWord, setGuessingYourWord] = useState(false);
   const [youGuessed, setYouGuessed] = useState(false);
   const [host, setHost] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
 
 
   function userNameHandler(event){
@@ -92,6 +93,9 @@ function App() {
     });
 
     socket.on("all_players_guessed",()=>{setAllPlayersReady(true)})
+
+    socket.on("game_over",()=>setGameOver(true))
+
   }, [socket]);
 
   // Move to GameLobby.js
@@ -133,6 +137,13 @@ function App() {
     socket.emit("guess_word", { word, room });
   };
 
+  function newGame(){
+    setGameOver(false)
+    setGameStarted(false)
+    setGuessingYourWord(false)
+    setAllPlayersReady(false)
+  }
+
   // Move to GameRoom.js
   let guess = youGuessed ? "You Guessed Right!!!" : "";
   let dis = players.length > 2 && allPlayersReady ? false : true;
@@ -170,6 +181,8 @@ function App() {
             guessWordHandler={event => setWord(event.target.value)}
             guessingYourWord={guessingYourWord}
             host={host}
+            gameOver={gameOver}
+            newGame={newGame}
           />} />
         </Routes>
       </Router>
