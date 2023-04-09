@@ -55,6 +55,7 @@ function GameRoom(props) {
           guessWord={props.guessWord}
           guessWordHandler={props.guessWordHandler}
           guessingYourWord={props.guessingYourWord}
+          host={props.host}
         />
       </div>
 

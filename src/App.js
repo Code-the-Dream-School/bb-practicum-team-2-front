@@ -25,6 +25,8 @@ function App() {
   const [length, setLength] = useState(0);
   const [guessingYourWord, setGuessingYourWord] = useState(false);
   const [youGuessed, setYouGuessed] = useState(false);
+  const [host, setHost] = useState(false);
+
 
   function userNameHandler(event){
     const {value} = event.target
@@ -49,7 +51,10 @@ function App() {
 
   useEffect(() => {
     // Move to GameLobby.js, inside a useEffect with Socket as dependency
-    socket.on("room_number", (room) => setRoom(room));
+    socket.on("room_number", (room) => {
+      setRoom(room)
+      setHost(true)
+    });
 
     // Move to GameLobby.js, inside a useEffect with Socket as dependency
     socket.on("available_rooms", (data) => {
@@ -69,6 +74,9 @@ function App() {
     socket.on("word_to_guess", (length) => {
       console.log(length,'word to guess length');
       setGameStarted(true);
+      setAllPlayersReady(false)
+      setYouGuessed(false);
+      setGuessingYourWord(false)  
       setLength(length);
     });
 
@@ -82,6 +90,8 @@ function App() {
     socket.on("right", () => {
       setYouGuessed(true);
     });
+
+    socket.on("all_players_guessed",()=>{setAllPlayersReady(true)})
   }, [socket]);
 
   // Move to GameLobby.js
@@ -113,6 +123,9 @@ function App() {
   const startGame = () => {
     socket.emit("start_game", room);
     setGameStarted(true);
+    setAllPlayersReady(false)
+    setYouGuessed(false);
+    setGuessingYourWord(false)
   };
 
   // Move to GameRoom.js
@@ -156,6 +169,7 @@ function App() {
             guessWord={guessWord}
             guessWordHandler={event => setWord(event.target.value)}
             guessingYourWord={guessingYourWord}
+            host={host}
           />} />
         </Routes>
       </Router>
