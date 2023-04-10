@@ -58,6 +58,8 @@ function GameRoom(props) {
           host={props.host}
           gameOver={props.gameOver}
           newGame={props.newGame}
+          youWon={props.youWon}
+          winner={props.winner}
         />
       </div>
 

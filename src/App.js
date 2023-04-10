@@ -27,6 +27,8 @@ function App() {
   const [youGuessed, setYouGuessed] = useState(false);
   const [host, setHost] = useState(false);
   const [gameOver, setGameOver] = useState(false);
+  const [youWon, setYouWon] = useState(false)
+  const [winner, setWinner] = useState("")
 
 
   function userNameHandler(event){
@@ -96,6 +98,11 @@ function App() {
 
     socket.on("game_over",()=>setGameOver(true))
 
+    socket.on("winner",data=>setWinner(data))
+
+    socket.on("you_won",()=>setYouWon(true))
+
+
   }, [socket]);
 
   // Move to GameLobby.js
@@ -142,6 +149,7 @@ function App() {
     setGameStarted(false)
     setGuessingYourWord(false)
     setAllPlayersReady(false)
+    setYouWon(false)
   }
 
   // Move to GameRoom.js
@@ -183,6 +191,8 @@ function App() {
             host={host}
             gameOver={gameOver}
             newGame={newGame}
+            youWon={youWon}
+            winner={winner}
           />} />
         </Routes>
       </Router>

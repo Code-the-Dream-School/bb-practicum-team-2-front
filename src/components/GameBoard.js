@@ -59,6 +59,7 @@ function GameBoard(props) {
         :
             <div>
             <h2>Game Over</h2>
+            {!props.youWon?<h2>Player {props.winner} won this game!</h2>:<h2>You Won!!!</h2>}
             <button onClick={newGame}>New Game</button>
             <button onClick={leaveRoom}>Leave Room</button>
             <button onClick={disconnectRoom} >Disconnect</button> 
