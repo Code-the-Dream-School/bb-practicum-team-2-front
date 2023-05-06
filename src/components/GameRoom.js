@@ -74,7 +74,7 @@ function GameRoom({ room, setInRoom, userName, host, setHost, gamesWon, _id }) {
     });
 
     socket.on("wrong", () => {
-      setGuess("Nop. Try again!!!")
+      setGuess("Nope. Try again!!!")
     });
 
     socket.on("all_ready_for_next_round", () => {
