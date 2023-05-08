@@ -53,10 +53,6 @@ function Login({ userName, setUserName, setSubmitted, submitted, userDataHandler
           }
         });
     
-      } else if (data.message === 'Username already exists') {
-        window.alert("Username is already taken");
-      } else if (data.message === 'Email already exists') {
-        window.alert("Email is already taken");
       } else if (userName === "") {
         window.alert("Please enter a username");
       } else if (data.hasUsername === true) {
