@@ -45,7 +45,7 @@ function GameChat({ room, userName }) {
       {showEmojiPicker && 
         <div className='absolute bottom-2'>
           <EmojiPicker 
-            height={250} 
+            height={280} 
             width={270}
             className="w-full" 
             searchDisabled={true}
@@ -58,33 +58,32 @@ function GameChat({ room, userName }) {
       <div id="chatbox"className="hover:shadow-xl hover:shadow-cyan-500/50">
         <div className='flex flex-row mb-2.5'>
           <div className="flex items-center px-1 py-2 w-full rounded-lg bg-sky-100 gap-0.5">
-          <input 
-            placeholder={"Message... " }
-            maxLength="50"
-            className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block basis-4/5 p-2.5'
-            onChange={(event)=> { setMessage(event.target.value)}} 
-            value={message}
-          />
-          <HappyFaceSVG 
-            height="30px" 
-            width="30px" 
-            onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-            className="ml-1 hover:bg-yellow-100 rounded-full"
-          />
-          <button 
-            type="submit" class="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 "
-            onClick={sendMessage}
-          >
-            <SendSVG 
-              height="35px" 
-              width="35px"
+            <input 
+              placeholder={"Message... " }
+              maxLength="50"
+              className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block basis-4/5 p-2.5'
+              onChange={(event)=> { setMessage(event.target.value)}} 
+              value={message}
             />
-          </button>
+            <HappyFaceSVG 
+              height="30px" 
+              width="30px" 
+              onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+              className="ml-1 hover:bg-yellow-100 rounded-full"
+            />
+            <button 
+              type="submit" class="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 "
+              onClick={sendMessage}
+            >
+              <SendSVG 
+                height="35px" 
+                width="35px"
+              />
+            </button>
           </div>
-          
         </div>
 
-        <div  className='border border-blue-200 h-96 overflow-y-scroll rounded-lg shadow-md bg-blue-50 '>
+        <div  className='border border-blue-200 h-96 overflow-y-scroll rounded-lg shadow-md bg-sky-100 '>
           <div >
             {chatLog.map((message, index) => (
               <p 

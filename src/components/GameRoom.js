@@ -5,7 +5,6 @@ import { base_url } from "../config";
 import ScoreBoard from "./ScoreBoard";
 import GameBoard from "./GameBoard";
 import GameChat from "./GameChat";
-import RoundCountDown from "./RoundCountDown";
 
 function GameRoom({ room, setInRoom, userName, host, setHost, gamesWon, _id }) {
   const socket = useContext(SocketContext);
@@ -46,7 +45,8 @@ function GameRoom({ room, setInRoom, userName, host, setHost, gamesWon, _id }) {
       setHint(hint);
     });
 
-
+     // changes
+     
     //Returns the length of the word to be guessed
     socket.on("word_to_guess", (length) => {
       setLength(length);
@@ -74,7 +74,7 @@ function GameRoom({ room, setInRoom, userName, host, setHost, gamesWon, _id }) {
     });
 
     socket.on("wrong", () => {
-      setGuess("Nop. Try again!!!")
+      setGuess("Nope. Try again!!!")
     });
 
     socket.on("all_ready_for_next_round", () => {
@@ -185,8 +185,6 @@ function GameRoom({ room, setInRoom, userName, host, setHost, gamesWon, _id }) {
     setYouWon(false);
   }
 
-  
-
   //Disables starting a new game/new round unless all players are ready and there are at least a minimum of 3 players
   let dis = players.length > 2 && allPlayersReady ? false : true;
 
@@ -212,16 +210,12 @@ function GameRoom({ room, setInRoom, userName, host, setHost, gamesWon, _id }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 justify-items-stretch mt-20">
-        <div className="justify-self-start ml-2.5 ">
+      <div style={{display: 'grid', gridTemplateColumns: '1fr 3fr 1fr', marginTop: '80px'}}>
+        <div style={{marginLeft: '10px'}}>
           <ScoreBoard players={players} setSeconds={setSeconds} />
         </div>
 
-        <div className="justify-self-stretch">
-          <div>
-            <RoundCountDown startTimer={startTimer} handleTimerEnd={handleTimerEnd} seconds={seconds} setSeconds={setSeconds} />
-          </div>
-          
+        <div style={{padding: '0 10px'}}>          
           <GameBoard
             hint={hint}
             wordHandler={wordHandler}
@@ -243,10 +237,11 @@ function GameRoom({ room, setInRoom, userName, host, setHost, gamesWon, _id }) {
             wordSent={wordSent} 
             setWordSent ={setWordSent}
             numberOfPlayers={players.length}
+            handleTimerEnd={handleTimerEnd} seconds={seconds} setSeconds={setSeconds}
           />
         </div>
 
-        <div className="justify-self-end mr-2.5">
+        <div style={{marginRight: '10px'}}>
           <GameChat 
             room={room} 
             players={players} 

@@ -45,7 +45,14 @@ function GameLobby({ userName, gamesWon, _id, setInRoom, inRoom }) {
     socket.on("available_rooms", (rooms) => {
       setAvailableRooms(rooms);
     });
+
+    socket.on("new_host",()=>setHost(true))
   }, [socket]);
+
+  //We look for available rooms once we connect
+  useEffect(() => {
+    socket.emit("search_for_rooms")
+  }, []);
 
   return (
     <div>
