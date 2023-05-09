@@ -54,7 +54,7 @@ function GameLobby({ userName, gamesWon, _id, setInRoom, inRoom }) {
           {availableRooms.length === 0 ? (
             <div>
               <title>Game Lobby</title>
-              <h1 class="mb-4 mt-2 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-gray">
+              <h1 className="mb-4 mt-2 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-gray">
                 Game Lobby
               </h1>
               <div>
@@ -77,12 +77,12 @@ function GameLobby({ userName, gamesWon, _id, setInRoom, inRoom }) {
                 <br></br>
 
                 <div>
-                  <p class="text-lg">
+                  <p className="text-lg">
                     <em>
                       <strong>Hint:</strong> No rooms available to join yet,
                     </em>
                   </p>
-                  <p class="text-lg">
+                  <p className="text-lg">
                     <em>create the first room above</em> ☝🏿☝🏾☝🏽☝🏼☝🏻{" "}
                     <em>to play!</em>
                   </p>
@@ -92,7 +92,7 @@ function GameLobby({ userName, gamesWon, _id, setInRoom, inRoom }) {
           ) : (
             <div>
               <title>Game Lobby</title>
-              <h1 class="mb-4 mt-2 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-gray">
+              <h1 className="mb-4 mt-2 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-gray">
                 Game Lobby
               </h1>
               <div>
@@ -115,13 +115,13 @@ function GameLobby({ userName, gamesWon, _id, setInRoom, inRoom }) {
               <br></br>
               <br></br>
               {/* Horizontal line */}
-              <div class="inline-flex items-center justify-center w-full">
-                <hr class="w-64 h-1 my-8 bg-gray-200 border-0 dark:bg-gray-700"></hr>{" "}
-                <span class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/2 dark:text-white dark:bg-gray-900 ml-1 mr-1">
+              <div className="inline-flex items-center justify-center w-full">
+                <hr className="w-64 h-1 my-8 bg-gray-200 border-0 dark:bg-gray-700"></hr>{" "}
+                <span className="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/2 dark:text-white dark:bg-gray-900 ml-1 mr-1">
                   or
                 </span>{" "}
               </div>
-              {/* <hr class="w-48 h-1 mx-auto my-4 bg-gray-100 border-0 rounded md:my-10 dark:bg-gray-700"></hr> */}
+              {/* <hr className="w-48 h-1 mx-auto my-4 bg-gray-100 border-0 rounded md:my-10 dark:bg-gray-700"></hr> */}
 
               <div>
                 <br></br>
